@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Quadcopter Drone Build | Kenneth Kuang</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<a href="../index.html">← Back to Home</a>
+
+<header>
+  <h1>Quadcopter Drone Build</h1>
+  <p><strong>Focus:</strong> system integration, power/wiring constraints, ESC–FC compatibility, debugging</p>
+</header>
+
+<section>
+  <h2>Problem</h2>
+  <p>
+    Build a quadcopter from components to learn the full integration pipeline—mechanical assembly,
+    power distribution, ESC–flight controller signaling, and common failure modes during bring-up.
+  </p>
+</section>
+
+<section>
+  <h2>Constraints</h2>
+  <ul>
+    <li><strong>Budget:</strong> student budget using off-the-shelf FPV components</li>
+    <li><strong>Tools:</strong> basic soldering + hand tools, limited test equipment</li>
+    <li><strong>Design goal:</strong> learn wiring, grounding, and control signal routing (not just “buy-and-fly”)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>System Overview</h2>
+  <ul>
+    <li><strong>Frame:</strong> lightweight quad frame with top-mounted battery for CG and component clearance</li>
+    <li><strong>Propulsion:</strong> 4 motors + ESCs</li>
+    <li><strong>Control:</strong> flight controller with gyro/accelerometer</li>
+    <li><strong>Power:</strong> LiPo → main leads → power distribution → ESCs; regulated rails for FC</li>
+  </ul>
+  <p>
+    <em>Engineering takeaway:</em> a drone is not “electronics + software.” It is a tightly coupled system where
+    wiring layout, grounding, vibration, and CG placement directly affect stability and reliability.
+  </p>
+</section>
+
+<section>
+  <h2>Design Decisions</h2>
+
+  <h3>1) ESC selection and wiring approach</h3>
+  <p>
+    I initially chose individual ESCs to force myself to understand the full signal/power routing
+    and motor control wiring. That increased wiring complexity and exposed compatibility issues that
+    a 4-in-1 ESC would have hidden.
+  </p>
+
+  <h3>2) Component placement and CG</h3>
+  <p>
+    Battery placement was treated as a center-of-gravity problem: I aimed to keep mass near the midline
+    to reduce control effort and improve stability. Mounting choices also considered prop clearance and
+    cable strain relief to avoid intermittent failures.
+  </p>
+
+  <h3>3) Cable management as reliability engineering</h3>
+  <p>
+    Cable routing was planned to reduce vibration-induced fatigue and prevent wires from contacting props
+    or sharp edges. Strain relief and short, clean runs were prioritized over “it fits.”
+  </p>
+</section>
+
+<section>
+  <h2>Bring-Up & Debugging</h2>
+
+  <h3>Issue: FC–ESC compatibility / connector mismatch</h3>
+  <p>
+    During integration, I hit a mismatch between the flight controller’s expected ESC interface and the
+    physical wiring I had available. This forced a redesign of how I routed signal and ground references
+    and confirmed that “one ground point” on the controller does not mean “one ground wire total.”
+  </p>
+
+  <h3>What I learned</h3>
+  <ul>
+    <li>Bring-up should be staged: power subsystem → FC power/boot → ESC power → motor spin test</li>
+    <li>Grounding is not optional “black wires”; it is the reference for control signals</li>
+    <li>Connector standards vary—plan interfaces before soldering permanent joints</li>
+  </ul>
+
+  <h3>How I would test next time (more disciplined)</h3>
+  <ul>
+    <li>Continuity check after every solder stage (before applying battery)</li>
+    <li>Smoke-stopper / current-limited first power-on</li>
+    <li>Verify ESC signal mapping and motor order before props</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Results</h2>
+  <ul>
+    <li>Assembled the full mechanical + electrical system and reached successful subsystem bring-up</li>
+    <li>Identified interface mismatch early enough to avoid damaging components</li>
+    <li>Documented wiring lessons that will reduce build time and risk in future iterations</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Next Steps</h2>
+  <ul>
+    <li>Switch to a 4-in-1 ESC (or FC/ESC stack) to reduce wiring complexity and failure points</li>
+    <li>Add vibration isolation + tidy harnessing to improve reliability</li>
+    <li>Run structured flight tests: hover tuning → step inputs → endurance checks</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Photos / Evidence</h2>
+  <p>
+    Add 3–6 images here (build, wiring close-up, bench test). Create a folder at
+    <code>assets/images/</code> and reference images like:
+  </p>
+  <ul>
+    <li><code>&lt;img src="../assets/images/drone_01.jpg" width="700"&gt;</code></li>
+  </ul>
+</section>
+
+</body>
+</html>
